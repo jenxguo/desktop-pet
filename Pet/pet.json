@@ -1,0 +1,56 @@
+{
+  "name": "Mars",
+  "pronouns": { "they": "she", "them": "her", "their": "her" },
+  "menuBarSymbol": "pawprint.fill",
+  "photosFolderName": "Mars Photos",
+
+  "sprite": {
+    "frameWidth": 68,
+    "frameHeight": 46,
+    "feetY": 43,
+    "mouth": [53, 18],
+    "scale": 2.25
+  },
+
+  "movement": {
+    "walkSpeed": 36,
+    "runSpeed": 110,
+    "walkFrameSeconds": 0.12,
+    "runFrameSeconds": 0.09
+  },
+
+  "features": {
+    "photoDrop": true,
+    "meals": true,
+    "fetch": true,
+    "tidy": true,
+    "statusBubbles": true
+  },
+
+  "schedule": {
+    "breakfast": "09:00",
+    "lunch": "12:30",
+    "dinner": "18:30",
+    "photoDrop": "10:00",
+    "breakIntervalMinutes": 50,
+    "fetchThrows": 3
+  },
+
+  "theme": {
+    "background": "#F6F1E7",
+    "card": "#FFFDF8",
+    "ink": "#3B2219",
+    "border": "#E6DCCB",
+    "accent": "#62BCCB"
+  },
+
+  "text": {
+    "greeting": "Hi, I'm {name}!",
+    "mealBubble": "time to eat?",
+    "selfCareBubble": "now you eat too!",
+    "fetchLaterBubble": "later?",
+    "thanksButton": "Thanks, {name}",
+    "tidyToastOne": "{name} tidied 1 screenshot  ·  Undo",
+    "tidyToastMany": "{name} tidied {count} screenshots  ·  Undo"
+  }
+}
