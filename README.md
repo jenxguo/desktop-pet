@@ -23,12 +23,18 @@ Everything is in the menu bar (with a snooze-everything button), times are in Se
 You need macOS 13+ and Xcode or the Command Line Tools (`xcode-select --install`).
 
 ```bash
-git clone https://github.com/<you>/<your-fork>.git
-cd <your-fork>
+git clone https://github.com/jenxguo/desktop-pet.git
+cd desktop-pet
 swift run
 ```
 
-The pet shows up above your Dock, with a 🐾 in the menu bar. To keep it, build a real app and drag it into /Applications:
+Making your own pet? Click **Fork** on GitHub first and clone your fork instead, so you can push your pet's art.
+
+The first build takes about 30 seconds. Then the pet shows up above your Dock, with a 🐾 in the menu bar. `swift run` keeps running in that terminal until you quit: choose **Quit Mars** from the menu bar, or press **Ctrl+C** in the terminal.
+
+The first time the pet tidies screenshots, macOS asks whether Terminal (or the pet's app) can access your Desktop folder. Click **Allow**, or tidying can't move anything.
+
+To keep it, build a real app and drag it into /Applications:
 
 ```bash
 ./scripts/build-app.sh
@@ -59,10 +65,13 @@ Pet/props/        bowls, kibble, ball, folder
 4. **Check and run:**
 
    ```bash
-   pip3 install -r tools/requirements.txt   # Pillow + numpy, once
-   python3 tools/check_pet.py               # catches size/ground-line/mouth mistakes, draws build/pet-preview.png
+   python3 -m venv .venv && source .venv/bin/activate   # once; later, just `source .venv/bin/activate`
+   pip install -r tools/requirements.txt                  # Pillow + numpy
+   python3 tools/check_pet.py      # catches size/ground-line/mouth mistakes, draws build/pet-preview.png
    swift run
    ```
+
+   The virtual environment (`.venv`) keeps this working on any Python, including Homebrew's, which refuses a plain `pip3 install` with an "externally-managed-environment" error.
 
 The full guide is in **[docs/MAKE_YOUR_OWN_PET.md](docs/MAKE_YOUR_OWN_PET.md)**: photo list, every frame, prompts, all `pet.json` keys, and tips for cats and other non-dogs.
 
