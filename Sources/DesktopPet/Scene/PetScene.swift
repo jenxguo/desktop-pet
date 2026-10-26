@@ -381,8 +381,9 @@ final class PetScene: SKScene {
 
     // MARK: - Status notifications
 
-    /// Called by AppDelegate's NotificationWatcher for each dropped file.
-    /// Queues if one's already showing, so a burst doesn't overlap.
+    /// A short bubble above the pet that fades on its own — for each
+    /// NotificationWatcher file, and for moments with a quick thing to say
+    /// ("nothing to tidy!"). Queues if one's already showing.
     func showNotification(_ message: String) {
         guard notificationBubble == nil else {
             notificationQueue.append(message)

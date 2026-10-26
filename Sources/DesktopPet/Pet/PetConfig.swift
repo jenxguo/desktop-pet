@@ -213,7 +213,9 @@ extension PetConfig {
         "fetchLaterBubble": "later?",
         "thanksButton": "Thanks, {name}",
         "tidyToastOne": "{name} tidied 1 screenshot  ·  Undo",
-        "tidyToastMany": "{name} tidied {count} screenshots  ·  Undo"
+        "tidyToastMany": "{name} tidied {count} screenshots  ·  Undo",
+        "noPhotosBubble": "add photos to {photosFolder} first!",
+        "nothingToTidyBubble": "nothing to tidy!"
       }
     }
     """

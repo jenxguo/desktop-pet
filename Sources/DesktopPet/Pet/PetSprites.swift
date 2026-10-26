@@ -17,9 +17,9 @@ enum PetSprites {
     static let sit = optional("sit", fallback: stand)
     static let sleep = optional("sleep", fallback: sit)
     /// Wander's idle sniff. Without its own frame it bobs the `stand` frame.
-    static let sniff = optional("sniff", fallback: stand)
+    static let sniff = optional("sniff", fallback: stand, bonus: true)
     /// Shown while being dragged around (tilted).
-    static let dangle = optional("dangle", fallback: stand)
+    static let dangle = optional("dangle", fallback: stand, bonus: true)
     static let eat = optional("eat", fallback: sit)
     static let playBow = optional("play_bow", fallback: stand)
     static let carryBall = animation("carry_ball", fallback: run)
@@ -49,9 +49,11 @@ enum PetSprites {
         return texture
     }
 
-    private static func optional(_ name: String, fallback: SKTexture) -> SKTexture {
+    /// `bonus` frames are extras most pets won't have, so a missing one
+    /// isn't worth mentioning.
+    private static func optional(_ name: String, fallback: SKTexture, bonus: Bool = false) -> SKTexture {
         if let texture = load(directory.appendingPathComponent("\(name).png")) { return texture }
-        warnMissing("\(name).png")
+        if !bonus { warnMissing("\(name).png") }
         return fallback
     }
 

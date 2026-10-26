@@ -84,24 +84,27 @@ final class MealMoment: PetMoment {
         let calendar = Calendar.current
         let defaults = UserDefaults.standard
 
-        for meal in mealTimes {
-            if let snoozeUntil = defaults.object(forKey: snoozeKey(meal.key)) as? Date, now < snoozeUntil {
-                continue
-            }
-
+        // Only the most recent meal whose time has passed. Launching at 7pm
+        // asks for dinner once, not breakfast, lunch and dinner back to back;
+        // meals missed earlier in the day are simply skipped.
+        let passed = mealTimes.compactMap { meal -> (meal: MealTime, time: Date)? in
             guard
-                let triggerTime = calendar.date(bySettingHour: meal.hour, minute: meal.minute, second: 0, of: now),
-                now >= triggerTime
-            else { continue }
-
-            if let last = defaults.object(forKey: lastMealKey(meal.key)) as? Date,
-               calendar.isDate(last, inSameDayAs: now) {
-                continue // already had this meal today
-            }
-
-            start(key: meal.key)
-            return // one moment at a time; the rest wait for the next check
+                let time = calendar.date(bySettingHour: meal.hour, minute: meal.minute, second: 0, of: now),
+                now >= time
+            else { return nil }
+            return (meal, time)
         }
+        guard let latest = passed.max(by: { $0.time < $1.time })?.meal else { return }
+
+        if let snoozeUntil = defaults.object(forKey: snoozeKey(latest.key)) as? Date, now < snoozeUntil {
+            return
+        }
+        if let last = defaults.object(forKey: lastMealKey(latest.key)) as? Date,
+           calendar.isDate(last, inSameDayAs: now) {
+            return // already had this meal today
+        }
+
+        start(key: latest.key)
     }
 
     private func snoozeKey(_ meal: String) -> String { scene.defaultsKey("mealSnoozeUntil.\(meal)") }

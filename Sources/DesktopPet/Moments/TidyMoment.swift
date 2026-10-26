@@ -45,7 +45,10 @@ final class TidyMoment: PetMoment {
     /// recording currently sitting there. Queues if another moment's running.
     func triggerNow() {
         let urls = ScreenshotFinder.findAll()
-        guard !urls.isEmpty else { return }
+        guard !urls.isEmpty else {
+            scene.showNotification(scene.pet.text("nothingToTidyBubble"))
+            return
+        }
         start(urls: urls)
     }
 

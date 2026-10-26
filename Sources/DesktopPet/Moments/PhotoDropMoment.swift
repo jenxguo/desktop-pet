@@ -36,11 +36,24 @@ final class PhotoDropMoment: PetMoment {
     }
 
     /// Menu bar → "Bring me a photo now". Does nothing if another moment is
-    /// running or the photo folder is empty.
+    /// running. With an empty photo folder, the pet says so and opens the
+    /// folder, so a first try doesn't just silently do nothing.
     func triggerNow() {
-        guard scene.isWandering, let url = PhotoLibrary.pickPhoto() else { return }
+        guard scene.isWandering else { return }
+        if !dropPhoto() {
+            scene.showNotification(scene.pet.text("noPhotosBubble"))
+            PhotoLibrary.ensureFolderExists()
+            NSWorkspace.shared.open(PhotoLibrary.photosFolder)
+        }
+    }
+
+    /// False if there's no photo to drop.
+    @discardableResult
+    private func dropPhoto() -> Bool {
+        guard let url = PhotoLibrary.pickPhoto() else { return false }
         UserDefaults.standard.set(Date(), forKey: lastDropDateKey)
         start(photoURL: url)
+        return true
     }
 
     func wanderTick(now: Date) {
@@ -60,7 +73,7 @@ final class PhotoDropMoment: PetMoment {
             return // already dropped today
         }
 
-        triggerNow()
+        dropPhoto() // silently; an empty folder is only worth mentioning when asked
     }
 
     private func start(photoURL: URL) {

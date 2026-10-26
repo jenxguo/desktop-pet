@@ -81,6 +81,7 @@ That's it. You get a menu item, a Settings toggle, and a `features.stretch` swit
 | `scene.direction`, `scene.faceDirection()` | 1 = right, -1 = left |
 | `scene.groundY`, `scene.bodyWidth`, `scene.headTopY` | Layout helpers, so props fit any size of pet |
 | `scene.makeSpeechBubble(text:)` | A themed bubble above the head (you add it to the scene) |
+| `scene.showNotification(text)` | A quick bubble that pops up and fades on its own, e.g. "nothing to tidy!" |
 | `scene.isOverNode(_:_:padding:)`, `scene.isOverDog(_:)` | Hit testing |
 | `scene.isGloballySnoozed(now:)` | Respect "Snooze everything" |
 | `scene.defaultsKey("name")` | Namespaced UserDefaults key for your own bookkeeping |
